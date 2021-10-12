@@ -34,8 +34,7 @@ const StudentCard = ({data}) => {
                         if (field.name === inputFields.birthYear.name && content) {
                             content += ' (' + studentAge(content) + ') года';
                         } else if (field.name === inputFields.portfolio.name && content) {                            
-                            content = (<a href={content}>{content}</a>);
-                            console.log('Content', content);
+                            content = (<a href={content}>{content}</a>);                            
                         }
 
                         return(<li key={field.name} className="list-group-item border-0"> <span className="fw-bold">{field.label}:</span>&nbsp;{content}</li>);
