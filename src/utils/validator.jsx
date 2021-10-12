@@ -3,6 +3,7 @@ function validate(validateMethod, data, validateMethodConfig) {
     const REGEX_EMAIL = /^\S+@\S+\.\S+$/g;
     const REGEX_CONTAIN_CAPITAL = /[A-Z]+/;
     const REGEX_CONTAIN_DIGIT = /\d+/;
+    const REGEX_URL = /^https*:\/\/(\w+\.)+\w+$/;
 
     let isDataValid = true;
 
@@ -21,6 +22,13 @@ function validate(validateMethod, data, validateMethodConfig) {
         break;
     case 'minLen':
         isDataValid = (data.length >= validateMethodConfig.value);
+        break;
+    case 'url':
+        isDataValid = REGEX_URL.test(data);
+        break;
+    case 'birthYear':
+        const yearNow = (new Date()).getFullYear();        
+        isDataValid = (/^(\d){4,4}$/).test(data) && (yearNow - data) > 0 && (yearNow - data) < 100;
         break;
     default:
         return `Unsupported validate method: ${validateMethod}`;

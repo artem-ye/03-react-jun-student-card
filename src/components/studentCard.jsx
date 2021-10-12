@@ -1,73 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import Input from './input';
-import validator from '../utils/validator';
+import React from 'react';
 
-const StudentCard = () => {
-    const [formData, setFormData] = useState({});
-    const [error, setError] = useState({});
+const StudentCard = ({data}) => {
+    const isEmptyData = Object.keys(data).length = 0;    
 
     const inputFields = {
         firstName: {name: 'firstName', label: 'Имя'},
-        secondName: {name: 'secondName', label: 'Фамилия'},
+        lastName: {name: 'lastName', label: 'Фамилия'},
         birthYear: {name: 'birthYear', label: 'Год рождения'},
         portfolio: {name: 'portfolio', label: 'Портфолио'}
     };
 
-    const validationRules = {
-        [inputFields.firstName.name]: {
-            isRequired: {message: 'Поле "'+ inputFields.firstName.label + '" обязательно для заполнения'}
-        }
-    }
+    if (isEmptyData) {
+        return (<>
+            <h1>Карточка студента</h1>                
+            <p>Нет данных</p>
+            <button className="btn btn-primary">Создать</button>            
+        </>)
+    } else {
+        const studentAge = (birthYear) => {
+            const yearNow = (new Date()).getFullYear(); 
+            return yearNow - birthYear;
+        };
 
-    function validate() {
-        const errors = validator(formData, validationRules);
-        setError(errors);
-    }
+        return (<>
+            <h1>Карточка студента</h1>                
+            <ul className="list-group list-group-flush border-0">
+                {
+                    Object.values(inputFields).map((field) => {
+                        let content = data[field.name];
 
-    useEffect(() => {
-        validate();
-    }, [formData]);
+                        console.log(field.name,  inputFields.portfolio.name, field.name === inputFields.portfolio.name);
 
+                        if (field.name === inputFields.birthYear.name && content) {
+                            content += ' (' + studentAge(content) + ') года';
+                        } else if (field.name === inputFields.portfolio.name && content) {                            
+                            content = (<a href={content}>{content}</a>);
+                            console.log('Content', content);
+                        }
 
-    const handleFormDataChange = (event) => {
-        const {name, value} = event.target;
-        setFormData(prevState => {
-            return {...prevState, [name]: value}
-        });
+                        return(<li key={field.name} className="list-group-item border-0"> <span className="fw-bold">{field.label}:</span>&nbsp;{content}</li>);
+                    })
+                }
 
-        // validate();
-        // setError(validator(formData))
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        // const res = validator(formData, validationRules);
-        // console.log(res);
-
-        // setError(Object.keys(error).length === 0 ? {name: 'Error'} : {});
-    }
-
-    return ( 
-        <form className="row g-3" onSubmit={handleSubmit}>
-            <div className="col-md-4">
-                {Object.values(inputFields).map(({name, label}) => (
-                    <Input 
-                        key={name}
-                        name={name}
-                        label={label}
-                        error={error[name]}
-                        value={formData[name] || ''}
-                        onChange={handleFormDataChange}
-                    />
-                ))}
-            </div>
-            <div className="col-12">
-                <button className="btn btn-primary" type="submit">Submit form</button>
-            </div>
-        </form>
-        
-    );
+                {/* <li className="list-group-item border-0"> <span className="fw-bold">Имя</span> An item</li>
+                <li className="list-group-item border-0">A second item</li>
+                <li className="list-group-item border-0">A third item</li>
+                <li className="list-group-item border-0">A fourth item</li>
+                <li className="list-group-item border-0">And a fifth one</li> */}
+            </ul>
+            <button className="btn btn-primary">Редактировать</button>            
+        </>)
+    }   
 }
  
 export default StudentCard;
