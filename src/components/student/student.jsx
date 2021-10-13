@@ -3,14 +3,14 @@ import EmptyData from './emptyData';
 import StudentCard from './studentCard/studentCard';
 import StudentCardEditForm from './studentCardEditForm/studentCardEditForm';
 
-const Student = ({storage, mode, onEditRedirect}) => {        
+const Student = ({storage, mode, onEditRedirect, onHomeRedirect}) => {        
     let childComponent;    
 
     const data = storage.getData();
 
     switch (mode) {
         case 'edit':
-            childComponent =<StudentCardEditForm data={data}/>;
+            childComponent =<StudentCardEditForm data={data} onHomeRedirect={onHomeRedirect}/>;
             break;
         case 'view':
             childComponent = !storage.isEmptyData() 

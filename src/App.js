@@ -29,10 +29,14 @@ function App() {
         window.location.href='/edit';
     }
 
+    const handleHomeRedirect = () => {
+        window.location.href='/';
+    }
+
     return (
         <Switch>
             <Route exact path="/">                
-                <Student mode='view' storage={studentModel} onEditRedirect={handleEditRedirect}/>
+                <Student mode='view' storage={studentModel} onEditRedirect={handleEditRedirect} onHomeRedirect={handleHomeRedirect}/>
             </Route>        
             <Route exact path="/edit">            
                 <Student mode='edit' storage={studentModel}/>

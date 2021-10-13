@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Input from '../../input';
 import {VALIDATION_TYPES, useValidator} from './studentCardValidator'
 
-const StudentCardEditForm = ({data}) => {        
+const StudentCardEditForm = ({data, onHomeRedirect}) => {        
     const [formData, setFormData] = useState(data);
     const [error, setError] = useState({});      
 
@@ -35,6 +35,11 @@ const StudentCardEditForm = ({data}) => {
         event.preventDefault(); 
         console.log('Submitting...');
         validate();
+
+        if (Object.keys(error).length === 0) {
+            onHomeRedirect();
+        }
+
     }
 
     return ( 
