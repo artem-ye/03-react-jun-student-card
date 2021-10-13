@@ -1,4 +1,4 @@
-import validator from '../../utils/validator';
+import validator from '../../../utils/validator';
 
 const VALIDATION_TYPES = ['isRequired', 'birthYear', 'url'].reduce((acc, el) => {
     return {...acc, [el]: el}

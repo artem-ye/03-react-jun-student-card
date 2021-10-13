@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Input from '../input';
+import Input from '../../input';
 import {VALIDATION_TYPES, useValidator} from './studentCardValidator'
 
-const StudentCardEditForm = () => {
-    const [formData, setFormData] = useState({firstName: '', lastName: '', birthYear: '', portfolio: ''});
+const StudentCardEditForm = ({data}) => {        
+    const [formData, setFormData] = useState(data);
     const [error, setError] = useState({});      
 
     const inputFields = {

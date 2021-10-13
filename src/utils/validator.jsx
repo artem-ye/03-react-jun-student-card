@@ -8,8 +8,8 @@ function validate(validateMethod, data, validateMethodConfig) {
     let isDataValid = true;
 
     switch (validateMethod) {
-    case 'isRequired':
-        isDataValid = (data.trim() !== '');
+    case 'isRequired':        
+        isDataValid = (data || data.trim() !== '');
         break;
     case 'isEmail':
         isDataValid = REGEX_EMAIL.test(data);
