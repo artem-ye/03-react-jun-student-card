@@ -18,21 +18,21 @@ const DataField = ({label, content, fieldType}) => {
     switch (fieldType) {
     case DATA_FIELD_TYPES.url:
         return (
-            <li className="list-group-item border-0">
+            <li className="list-group-item border-0 ps-0">
                 <span className="fw-bold">{label}:</span>
                 &nbsp;<a href={content}>{content}</a>
             </li>
         );        
     case DATA_FIELD_TYPES.birthYear:
         return (
-            <li className="list-group-item border-0">
+            <li className="list-group-item border-0 ps-0">
                 <span className="fw-bold">{label}:</span>
                 &nbsp;{toAge(content)}
             </li>
         );
     default:
         return (
-            <li className="list-group-item border-0">
+            <li className="list-group-item border-0 ps-0">
                 <span className="fw-bold">{label}:</span>
                 &nbsp;{content}
             </li>

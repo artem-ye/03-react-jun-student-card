@@ -1,13 +1,14 @@
 const useStorage = (storeId) => {
     let data = localStorage.getItem(storeId);
+    data = JSON.parse(data);
 
     return {
         getData: () => {
             return data;
         },
-        setData: (newData) => {            
-            localStorage.setItem(storeId, data);
+        setData: (newData) => {                        
             data = {...newData};
+            localStorage.setItem(storeId, JSON.stringify(data));
             return data;
         }        
     }

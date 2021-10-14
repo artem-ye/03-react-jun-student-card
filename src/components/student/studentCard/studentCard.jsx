@@ -8,11 +8,7 @@ const StudentCard = ({data, onEditRedirect}) => {
         lastName: {name: 'lastName', label: 'Фамилия'},
         birthYear: {name: 'birthYear', label: 'Год рождения'},
         portfolio: {name: 'portfolio', label: 'Портфолио', fieldType: DATA_FIELD_TYPES.url}
-    }; 
-    
-    // const handleEdit = () => {        
-    //     window.location.href='/edit';
-    // }
+    };         
 
     return (<>                        
         <ul className="list-group list-group-flush border-0">
@@ -30,8 +26,8 @@ const StudentCard = ({data, onEditRedirect}) => {
             }               
         </ul>
         <button 
-            className="btn btn-primary"
-            onClick={onEditRedirect}
+            className="btn btn-primary mt-2"
+            onClick={onEditRedirect}            
         >Редактировать
         </button>            
     </>)    

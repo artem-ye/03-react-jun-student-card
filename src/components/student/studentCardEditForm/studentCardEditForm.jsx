@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Input from '../../input';
-import {VALIDATION_TYPES, useValidator} from './studentCardValidator'
+import {VALIDATION_TYPES, useValidator} from './studentCardValidator';
 
-const StudentCardEditForm = ({data, onHomeRedirect}) => {        
+
+const StudentCardEditForm = ({data, onHomeRedirect, onSave}) => {        
     const [formData, setFormData] = useState(data);
-    const [error, setError] = useState({});      
+    const [error, setError] = useState({});               
 
     const inputFields = {
         firstName: {name: 'firstName', label: 'Имя', validation: [VALIDATION_TYPES.isRequired]},
@@ -15,9 +16,15 @@ const StudentCardEditForm = ({data, onHomeRedirect}) => {
 
     const validator = useValidator(inputFields);   
     
-    function validate() {        
-        const errors = validator(formData);
+    function validate() {
+        const normalize = () => {
+            const dataProto = Object.fromEntries(Object.keys(inputFields).map(field => [field, '']));
+            return {...dataProto, ...formData};
+        }        
+
+        const errors = validator( normalize(formData) );
         setError(errors);
+        return (Object.keys(errors).length === 0);
     }
 
     useEffect(() => {
@@ -33,18 +40,19 @@ const StudentCardEditForm = ({data, onHomeRedirect}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault(); 
-        console.log('Submitting...');
-        validate();
-
-        if (Object.keys(error).length === 0) {
-            onHomeRedirect();
+        
+        if (validate()) {    
+            onSave(formData);
+            onHomeRedirect();    
         }
 
     }
 
+    const validationPassed = Object.keys(error).length === 0 ? true : false;
+
     return ( 
         <form className="row g-3" onSubmit={handleSubmit}>
-            <div className="col-md-4">
+            <div className="col-md-10">
                 {Object.values(inputFields).map(({name, label}) => (
                     <Input 
                         key={name}
@@ -57,7 +65,8 @@ const StudentCardEditForm = ({data, onHomeRedirect}) => {
                 ))}
             </div>
             <div className="col-12">
-                <button className="btn btn-primary" type="submit">Submit form</button>
+                <button className="btn btn-secondary me-1" type="button" onClick={onHomeRedirect} >Назад</button>
+                <button className="btn btn-primary" type="submit" disabled={!validationPassed}>Сохранить</button>
             </div>
         </form>
         

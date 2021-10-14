@@ -4,7 +4,7 @@ const Input = ({name, label, error, value, onChange}) => {
     const showError = !!error;
 
     return ( 
-        <>
+        <div className="mb-3">
             <label 
                 htmlFor={name} 
                 className="form-label"
@@ -17,7 +17,7 @@ const Input = ({name, label, error, value, onChange}) => {
             <div className="invalid-feedback">
                 {error}
             </div>}
-        </>
+        </div>
     );
 }
  
